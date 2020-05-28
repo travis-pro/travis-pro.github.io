@@ -1,0 +1,106 @@
+@font-face {
+  font-family: SourceSansProRegular;
+  src: url(fonts/SourceSansPro-Regular.ttf);
+}
+
+@font-face {
+  font-family: SourceSansProBold;
+  src: url(fonts/SourceSansPro-Bold.ttf);
+}
+
+html {
+  font-family: SourceSansProRegular, Helvetica, sans-serif;
+  color: #666;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 11px;
+  margin-bottom: 8px;
+  color: #9d9d9d;
+  font-family: SourceSansProBold;
+}
+
+.nav {
+  background-color: #f1f1f1;
+}
+
+.header {
+  color: #9d9d9d;
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 60px;
+}
+
+.content {
+  padding-left: 60px;
+  padding-top: 2px;
+}
+
+input[type=text], 
+textarea {
+  font-family: SourceSansProRegular;
+  width: 60%;
+  display: block;
+  height: auto;
+  line-height: normal;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  margin: -4px;
+  color: #666;
+  padding: 8px 10px 9px;
+  box-shadow: inset 0 0 1px 1px #d0d0d0;
+  transition: border-color .2s ease-in;
+}
+
+input[type=text]:focus,
+textarea:focus {
+  border-color: rgba(62,170,175,.2);
+  outline: 0;
+  color: #666;
+}
+
+input[type=submit] {
+  display: inline-block;
+  padding: .7em .8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 2px;
+  vertical-align: middle;
+  line-height: 1;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  color: #fff;
+  background-color: #2eb459;
+  margin-top: 10px;
+}
+
+input[type=submit]:hover {
+  background-color: #39aa56;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+  }
+
+  .header {
+    padding-left: 20px;
+  }
+
+  input[type=text], 
+  textarea {
+    width: 100%; 
+  }
+}

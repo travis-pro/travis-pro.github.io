@@ -1,0 +1,43 @@
+<html>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <body>
+    <div class="nav">
+      <p class="header">Travis CI</p>
+    </div>
+    <div class="content">
+      <h6 class="label">GitHub Application name: </h6>
+      <a id="gh_app_name_value">n/a</a>
+      <h6 class="label">GitHub Application ID: </h6>
+      <a id="gh_app_id_value">n/a</a>
+      <h6 class="label">GitHub Application PEM:</h6>
+      <input type="text" id="gh_app_pem_value" style="width:60%"` value=''/>
+    </div>
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      var code = urlParams.get('code')
+      var url = window.sessionStorage.getItem('github_url')
+
+//GHE requires specific accept header
+      var xhr = new XMLHttpRequest();
+      var target = '';
+      if(url != 'github.com') {
+        target = 'https://' + url + '/api/v3';
+      } else {
+        target = 'https://api.github.com';
+      }
+      target += '/app-manifests/' + code + '/conversions';
+      xhr.open('POST', target);
+      xhr.setRequestHeader('Accept', 'application/vnd.github.fury-preview+json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+          resp = JSON.parse(xhr.responseText);
+          document.getElementById("gh_app_name_value").innerHTML = resp.name;
+          document.getElementById("gh_app_id_value").innerHTML = resp.id;
+          document.getElementById("gh_app_pem_value").value = resp.pem;
+        }
+      }
+      xhr.send();
+    </script>
+  </body>
+</html>

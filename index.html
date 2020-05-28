@@ -1,0 +1,93 @@
+<html>
+
+  <script>
+    function setupManifest(host) {
+      input = document.getElementById("manifest")
+      redirect_url = window.location.href;
+      redirect_url = redirect_url.substring(0, redirect_url.lastIndexOf('/')) +  "/callback/index.html"
+      input.value = JSON.stringify(
+                                   {
+                                     "name": "TCIE-App",
+                                     "url": host,
+                                     "hook_attributes": {
+                                       "url": host+"/listener/",
+                                     },
+                                     "redirect_url": redirect_url,
+                                     "setup_url" : host+"/settings/github-apps-installations/redirect",
+                                     "setup_on_update" : true,
+                                     "callback_url" : host,
+                                     "public": true,
+                                     "default_permissions": {
+                                       "checks": "write",
+                                       "contents" :"read",
+                                       "administration":"read",
+                                       "organization_hooks" : "write",
+                                       "repository_hooks" : "write",
+                                       "statuses" :"write",
+                                       "members" : "read",
+                                       "metadata" : "read",
+                                       "deployments" : "write",
+                                       "pull_requests" : "read"
+                                     },
+                                     "default_events": [
+                                       "create",
+                                       "delete",
+                                       "check_suite",
+                                       "check_run",
+                                       "repository",
+                                       "pull_request",
+                                       "member",
+                                       "push",
+                                       "organization",
+                                       "deployment",
+                                       "deployment_status"
+                                     ]
+                                   }
+                                   , null , 4)
+
+      document.getElementById('gh_submit').disabled = false
+    }
+
+// updates form action with new github host
+    function setupGHUrl(val) {
+      url = new URL(val)
+    //state param does not work for ghe??
+      window.sessionStorage.setItem('github_url',url.host)
+      document.getElementById('form_gh').setAttribute('action', val + '/settings/apps/new')
+    }
+
+//resetting stored github_url
+    window.sessionStorage.setItem('github_url','github.com')
+  </script>
+  <link rel="stylesheet" type="text/css" href="./styles.css">
+
+  <body>
+    <div class="nav">
+      <p class="header">Travis CI</p>
+    </div>
+    <div class="content">
+      <h6 class="label">github url</h6>
+      <input 
+        type="text" 
+        id="input_gh_server"  
+        onchange='setupGHUrl(this.value);' 
+        value="https://github.com"
+        placeholder="https://github.com"
+      />
+      <h6 class="label">host:</h6>
+      <input 
+        type="text" 
+        id="input_host" 
+        onchange="setupManifest(this.value);" 
+        value="https://fillme"
+        placeholder="https://fillme"
+      />
+      <form id='form_gh' action="https://github.com/settings/apps/new?state=state1" method="post">
+        <h6 class="label">GitHub App Manifest preview:</h6> 
+        <textarea name="manifest" id="manifest" style='height:50%;'></textarea>
+        <input type="submit" id='gh_submit' value="Submit" disabled>
+      </form>
+    </div>
+
+  </body>
+</html>
